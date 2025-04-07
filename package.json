@@ -1,0 +1,19 @@
+{
+  "name": "performance-k6",
+  "version": "1.0.0",
+  "description": "PDT performance testing project using k6",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zecarrera/performance-k6.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zecarrera/performance-k6/issues"
+  },
+  "homepage": "https://github.com/zecarrera/performance-k6#readme"
+}
