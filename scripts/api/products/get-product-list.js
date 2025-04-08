@@ -20,9 +20,10 @@ export default function () {
         order: 0,
         page: 1,
         limit: 10,
+        sortOrder:'%7B%22_id%22:-1%7D'
     };
     
-    const url = `${__ENV.MY_HOSTNAME}/product/list?name=${queryParams.name}&category=${queryParams.category}&brand=${queryParams.brand}&min=${queryParams.min}&max=${queryParams.max}&rating=${queryParams.rating}&order=${queryParams.order}&page=${queryParams.page}&limit=${queryParams.limit}`;
+    const url = `${__ENV.MY_HOSTNAME}/product/list?name=${queryParams.name}&category=${queryParams.category}&brand=${queryParams.brand}&min=${queryParams.min}&max=${queryParams.max}&rating=${queryParams.rating}&order=${queryParams.order}&page=${queryParams.page}&limit=${queryParams.limit}&sortOrder=${queryParams.sortOrder}`;
 
     const headers = {
         'accept': 'application/json, text/plain, */*',
@@ -36,5 +37,5 @@ export default function () {
         'is status 200': (r) => r.status === 200,
     });
 
-    sleep(1); // Wait for 1 second between requests
+    sleep(1);
 }
