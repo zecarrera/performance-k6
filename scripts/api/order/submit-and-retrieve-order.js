@@ -3,6 +3,7 @@ import { check, sleep } from 'k6';
 import globalThresholds from '../../../config/global-thresholds.js';
 import { login } from '../login/post-login.js';
 import { addProductToCart } from '../cart/post-add-product-to-cart.js';
+import { addCartToOrder } from './post-add-cart-to-order.js';
 
 export const options = {
     thresholds: {
@@ -11,31 +12,25 @@ export const options = {
     },
 };
 
-export function addCartToOrder(hostname, token, cartId) {
-    const addOrderUrl = `${hostname}/order/add`;
-    const addOrderPayload = JSON.stringify({
-        cartId: cartId,
-        total: 999,
-    });
+export function getOrder(hostname, token, cartId) {
+    const getOrderUrl = `${hostname}/order/${cartId}`
     const headers = {
         'accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
         'Authorization': token,
     };
 
-    const response = http.post(addOrderUrl, addOrderPayload, { headers });
+    const response = http.get(getOrderUrl, { headers })
 
     check(response, {
-        'Add cart to order status is 200': (r) => r.status === 200,
+        'Get order status is 200': (r) => r.status === 200,
     });
-    let orderId = null;
+    let orderTotal = null;
     try {
         const responseBody = JSON.parse(response.body);
-        if (response.status === 200) {
-            orderId = responseBody.order._id;
-            console.log(`Order ID: ${orderId}`);
+        if (response.status == 200) {
+            orderTotal = responseBody.order.total;
         } else {
-            console.error(`Error adding cart to order: ${responseBody.message}`);
+            console.error(`Error retrieving order: ${responseBody.message}`);
         }
     } catch (error) {
         console.error(`Response status: ${response.status}`);
@@ -44,7 +39,7 @@ export function addCartToOrder(hostname, token, cartId) {
 
     sleep(1);
 
-    return { orderId };
+    return { orderTotal };
 }
 
 export function setup() {
@@ -69,5 +64,9 @@ export default function (data) {
 
     const { cartId } = addProductToCart(hostname, token, productDetails);
 
-    addCartToOrder(hostname, token, cartId);
+    const { orderId } = addCartToOrder(hostname, token, cartId);
+
+    const { orderTotal } = getOrder(hostname, token, orderId);
+
+    console.log(`\nOrder Submitted:\nOrderId: ${orderId}\nTotal: ${orderTotal}`);
 }

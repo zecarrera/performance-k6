@@ -16,23 +16,23 @@ export const options = {
 export function login() {
   const loginUrl = `${hostname}/auth/login`;
   const loginPayload = JSON.stringify({ email: email, password: password });
-  const loginHeaders = {
+  const headers = {
     'accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json',
   };
 
-  const loginRes = http.post(loginUrl, loginPayload, { headers: loginHeaders });
+  const response = http.post(loginUrl, loginPayload, { headers });
 
-  check(loginRes, {
+  check(response, {
     'Login status is 200': (r) => r.status === 200,
   });
 
-  if (loginRes.status !== 200) {
-    console.error(`Login failed with status: ${loginRes.status}, response: ${loginRes.body}`);
+  if (response.status !== 200) {
+    console.error(`Login failed with status: ${response.status}, response: ${response.body}`);
     return null;
   }
 
-  const responseBody = JSON.parse(loginRes.body);
+  const responseBody = JSON.parse(response.body);
   const token = responseBody.token;
 
   return { token, hostname };

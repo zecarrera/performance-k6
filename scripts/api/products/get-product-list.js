@@ -26,15 +26,13 @@ export default function () {
     const url = `${__ENV.MY_HOSTNAME}/product/list?name=${queryParams.name}&category=${queryParams.category}&brand=${queryParams.brand}&min=${queryParams.min}&max=${queryParams.max}&rating=${queryParams.rating}&order=${queryParams.order}&page=${queryParams.page}&limit=${queryParams.limit}&sortOrder=${queryParams.sortOrder}`;
 
     const headers = {
-        'accept': 'application/json, text/plain, */*',
-        'origin': __ENV.MY_HOSTNAME,
-        'referer': __ENV.MY_HOSTNAME,
+        'accept': 'application/json, text/plain, */*'
     };
 
-    const res = http.get(url, { headers: headers });
+    const res = http.get(url, { headers });
 
     check(res, {
-        'is status 200': (r) => r.status === 200,
+        'Get product list status is 200': (r) => r.status === 200,
     });
 
     sleep(1);

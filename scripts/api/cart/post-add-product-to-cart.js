@@ -15,25 +15,36 @@ export function addProductToCart(hostname, token, productDetails) {
   const addToCartPayload = JSON.stringify({
     products: [productDetails],
   });
-  const addToCartHeaders = {
+  const headers = {
     'accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
+    'Authorization': token,
   };
 
-  const addToCartRes = http.post(addToCartUrl, addToCartPayload, { headers: addToCartHeaders });
+  const response = http.post(addToCartUrl, addToCartPayload, { headers });
 
-  check(addToCartRes, {
+  check(response, {
     'Add to cart status is 200': (r) => r.status === 200,
   });
 
-  const responseBody = JSON.parse(addToCartRes.body);
-  const cartId = responseBody.cartId;
-  const total = responseBody.total;
+  let cartId = null;
+  try {
+    const responseBody = JSON.parse(response.body);
+    if (response.status === 200) {
+      cartId = responseBody.cartId;
+      console.log(`Cart ID: ${cartId}`);
+    } else {
+      console.error(`Error adding product to cart: ${responseBody.message}`);
+    }
+  }
+  catch (error) {
+    console.error(`Response status: ${response.status}`);
+    console.error(`Error parsing response: ${error}`);
+  }
 
   sleep(1);
 
-  return { cartId, total };
+  return { cartId };
 }
 
 export function setup() {
@@ -56,7 +67,5 @@ export default function (data) {
     product: '67aa25a7fd92fdf1b564824f',
   };
 
-  const { cartId, total } = addProductToCart(hostname, token, productDetails);
-
-  console.log(`Cart ID: ${cartId}, Total: ${total}`);
+  addProductToCart(hostname, token, productDetails);
 }
