@@ -1,0 +1,30 @@
+name: Run k6 Cloud Test
+
+on:
+  schedule:
+      - cron: '0 7 * * *' # Runs every day at 7 AM
+  workflow_dispatch:
+
+jobs:
+  k6-cloud-test:
+    name: Run k6 test on Grafana Cloud
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run k6 cloud test
+        uses: k6io/action@v0.3.1
+        with:
+          filename: ./scripts/api/order/submit-and-retrieve-order.js
+          cloud: true
+          # Virtual users set to 3
+          # Duration set to 5 minutes
+          flags: --vus 3 --duration 5m
+
+        env:
+          K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
+          MY_HOSTNAME: ${{ secrets.APP_HOSTNAME }}
+          USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
