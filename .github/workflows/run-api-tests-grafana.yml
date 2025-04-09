@@ -30,5 +30,5 @@ jobs:
           K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
           K6_CLOUD_PROJECT_ID: ${{ secrets.K6_CLOUD_PROJECT_ID }}
           MY_HOSTNAME: ${{ secrets.APP_HOSTNAME }}
-          USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
