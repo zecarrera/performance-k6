@@ -14,17 +14,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup K6
+        uses: grafana/setup-k6-action@v1
+
       - name: Run k6 cloud test
-        uses: k6io/action@v0.3.1
+        uses: grafana/run-k6-action@v1
         with:
-          filename: ./scripts/api/order/submit-and-retrieve-order.js
-          cloud: true
+          path: ./scripts/api/order/submit-and-retrieve-order.js
+          cloud-comment-on-pr: true
           # Virtual users set to 3
           # Duration set to 5 minutes
           flags: --vus 3 --duration 5m
 
         env:
           K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
+          K6_CLOUD_PROJECT_ID: ${{ secrets.K6_CLOUD_PROJECT_ID }}
           MY_HOSTNAME: ${{ secrets.APP_HOSTNAME }}
           USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
           USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
