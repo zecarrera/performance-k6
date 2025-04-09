@@ -3,8 +3,8 @@ import { check } from 'k6';
 import globalThresholds from '../../../config/global-thresholds.js';
 
 const hostname = __ENV.MY_HOSTNAME;
-const email = __ENV.USER_EMAIL || 'reta_kuhic@putsbox.com';
-const password = __ENV.USER_PASSWORD || '123456';
+const email = __ENV.TEST_USER_EMAIL;
+const password = __ENV.TEST_USER_PASSWORD;
 
 export const options = {
   thresholds: {
@@ -14,8 +14,15 @@ export const options = {
 };
 
 export function login() {
+  if (!email) {
+    throw new Error('Env variable: TEST_USER_EMAIL is not set');
+  }
+  if (!password) {
+    throw new Error('Env variable: TEST_USER_PASSWORD is not set');
+  }
+
   const loginUrl = `${hostname}/auth/login`;
-  const loginPayload = JSON.stringify({ email: email, password: password });
+  const loginPayload = JSON.stringify({ email, password });
   const headers = {
     'accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json',
