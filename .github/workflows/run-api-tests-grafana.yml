@@ -11,7 +11,12 @@ jobs:
   k6-cloud-test:
     name: Run k6 test on Grafana Cloud
     runs-on: ubuntu-latest
-
+    env:
+          K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
+          K6_CLOUD_PROJECT_ID: ${{ secrets.K6_CLOUD_PROJECT_ID }}
+          MY_HOSTNAME: ${{ secrets.APP_HOSTNAME }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,7 +24,7 @@ jobs:
       - name: Setup K6
         uses: grafana/setup-k6-action@v1
 
-      - name: Run k6 cloud test
+      - name: Run k6 API cloud test
         uses: grafana/run-k6-action@v1
         with:
           path: ./scripts/api/order/submit-and-retrieve-order.js
@@ -28,9 +33,8 @@ jobs:
           # Duration set to 5 minutes
           flags: --vus 3 --duration 5m
 
-        env:
-          K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
-          K6_CLOUD_PROJECT_ID: ${{ secrets.K6_CLOUD_PROJECT_ID }}
-          MY_HOSTNAME: ${{ secrets.APP_HOSTNAME }}
-          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+      - name: Run k6 Browser cloud test
+        uses: grafana/run-k6-action@v1
+        with:
+          path: ./scripts/browser/*
+          cloud-comment-on-pr: true

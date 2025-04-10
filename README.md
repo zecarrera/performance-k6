@@ -1,6 +1,6 @@
 # performance-k6
-PDT Performance testing framework using K6 and JavaScript
-
+PDT Performance testing framework using K6 and JavaScript.  
+It contains API and browser page load tests.
 
 ## Setup
 
@@ -13,6 +13,8 @@ Official documentation: [k6 installation](https://grafana.com/docs/k6/latest/set
 ## Running tests 
 
 ### Locally
+
+#### API tests
 
 **Pre-requisites:**
 - MERN-Shopping app is running - [Running mern app](https://github.com/zecarrera/mern-ecommerce/tree/mot?tab=readme-ov-file#running-locally-entire-application)
@@ -62,8 +64,23 @@ k6 run \
 -e MY_HOSTNAME=http://localhost:9011/api \
 ./scripts/api/products/get-product-list.js
 ```
- 
+
+#### Browser tests
+
+k6 also supports evaluating the front-end performance. This is examplified with 2 tests:
+- all-products-page.js
+- home-page.js
+  
+Running tests locally:
+```
+k6 run \
+-e MY_HOSTNAME=http://localhost:3000 \
+./scripts/browser/all-products-page.js
+```
+
 ### Pipeline
+
+Pipeline is configure to run both API and browser tests.  
 
 Smoke tests are running using GitHub Actions. Workflow is set to run:  
 - Daily at 7AM
