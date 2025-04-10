@@ -1,8 +1,6 @@
 # performance-k6
 PDT Performance testing framework using K6 and JavaScript
 
-## Summary
-This repo contains an example performance testing
 
 ## Setup
 
@@ -66,6 +64,20 @@ k6 run \
 ```
  
 ### Pipeline
+
+Smoke tests are running using GitHub Actions. Workflow is set to run:  
+- Daily at 7AM
+- On Pull requests
+- Manually triggered
+
+Tests are running against the deployed DEV instance of MERN Shop application and results are published to grafana cloud.
+
+![Grafana screenshot](./assets/grafana.png)
+
+When running on pull request a comment is also added with the test results.  
+
+![PR results](./assets/pull-request-results.png)
+
 
 
 ## Application under test  
