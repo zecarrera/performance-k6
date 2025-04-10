@@ -40,3 +40,4 @@ jobs:
           cloud-comment-on-pr: true
         env:
           MY_HOSTNAME: ${{ secrets.APP_BROWSER_HOSTNAME }}
+          K6_BROWSER_NO_SANDBOX: true
