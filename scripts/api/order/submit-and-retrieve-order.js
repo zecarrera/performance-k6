@@ -6,6 +6,15 @@ import { addProductToCart } from '../cart/post-add-product-to-cart.js';
 import { addCartToOrder } from './post-add-cart-to-order.js';
 
 export const options = {
+    scenarios: {
+        smoke_test_scenario: {
+          executor: 'shared-iterations',
+          startTime: '10s',
+          gracefulStop: '5s',
+          vus: 3,
+          maxDuration: '5m',
+        },
+      },
     thresholds: {
         http_req_failed: globalThresholds.http_req_failed,
         http_req_duration: globalThresholds.http_req_duration,

@@ -1,5 +1,5 @@
 import { browser } from 'k6/browser';
-const hostname = __ENV.MY_HOSTNAME;
+const hostname = __ENV.MY_BROWSER_HOSTNAME;
 
 export const options = {
   scenarios: {
