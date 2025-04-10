@@ -12,6 +12,7 @@ export const options = {
           startTime: '10s',
           gracefulStop: '5s',
           vus: 3,
+          iterations: 300,
           maxDuration: '5m',
         },
       },
