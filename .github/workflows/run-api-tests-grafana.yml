@@ -1,4 +1,4 @@
-name: Run k6 Cloud Test
+name: Run k6 Cloud Test - API
 
 on:
   schedule:
@@ -26,7 +26,7 @@ jobs:
         with:
           browser: true
 
-      - name: Run k6 API cloud test
+      - name: Run k6 API tests
         uses: grafana/run-k6-action@v1
         with:
           path: ./scripts/api/order/submit-and-retrieve-order.js
@@ -34,12 +34,3 @@ jobs:
           # Virtual users set to 3
           # Duration set to 5 minutes
           flags: --vus 3 --duration 5m
-
-      - name: Run k6 Browser cloud test
-        uses: grafana/run-k6-action@v1
-        with:
-          path: ./scripts/browser/*
-          cloud-comment-on-pr: true
-        env:
-          MY_HOSTNAME: ${{ secrets.APP_BROWSER_HOSTNAME }}
-          K6_BROWSER_NO_SANDBOX: true

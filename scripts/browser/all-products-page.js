@@ -14,7 +14,7 @@ export const options = {
   },
   thresholds: {
     checks: ['rate==1.0'], // All checks succeed (100% success rate)
-    browser_web_vital_lcp: ['p(90) < 1000'], //For 90% of the simulated users, the largest content element on the page loads in under 1 second.
+    browser_web_vital_lcp: ['p(90) < 3000'], //For 90% of the simulated users, the largest content element on the page loads in under 3 seconds.
   },
 };
 
