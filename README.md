@@ -87,6 +87,22 @@ Smoke tests are running using GitHub Actions. Workflow is set to run:
 - On Pull requests
 - Manually triggered
 
+API tests are running the `submit-and-retrieve-order` scenario, which is set to:
+```json
+scenarios: {
+        smoke_test_scenario: {
+          executor: 'shared-iterations',
+          startTime: '10s',
+          gracefulStop: '5s',
+          vus: 3,
+          iterations: 300,
+          maxDuration: '5m',
+        },
+      },
+```
+
+Browser tests are configure to run all existing tests under the scripts/browser folder.  
+
 Tests are running against the deployed DEV instance of MERN Shop application and results are published to grafana cloud.
 
 ![Grafana screenshot](./assets/grafana.png)
@@ -98,7 +114,6 @@ When running on pull request a comment is also added with the test results.
 
 **Browser Tests**
 ![PR results browser tests](./assets/test-results-2.png)
-
 
 ## Application under test  
 Tests are written against the [MERN-ecommerce](https://github.com/zecarrera/mern-ecommerce/tree/master)
