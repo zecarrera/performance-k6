@@ -1,4 +1,4 @@
-name: Run k6 Cloud Test - API
+name: Run k6 Cloud Test
 
 on:
   schedule:

@@ -94,10 +94,10 @@ Tests are running against the deployed DEV instance of MERN Shop application and
 When running on pull request a comment is also added with the test results.  
 
 **API Tests**
-![PR results](./assets/pull-request-results.png)
+![PR results](./assets/test-results.png)
 
 **Browser Tests**
-![PR results browser tests](./assets/pull-request-browser-results.png)
+![PR results browser tests](./assets/test-results-2.png)
 
 
 ## Application under test  
