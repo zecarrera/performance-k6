@@ -38,3 +38,5 @@ jobs:
         with:
           path: ./scripts/browser/*
           cloud-comment-on-pr: true
+        env:
+          MY_HOSTNAME: ${{ secrets.APP_BROWSER_HOSTNAME }}
